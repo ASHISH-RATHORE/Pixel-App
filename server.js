@@ -15,6 +15,7 @@ mongoose.connect(process.env.DATABASE_REMOTE,{
 
 
 
-app.listen(process.env.PORT,()=>{
+app.listen(process.env.PORT,(err)=>{
+    if(err) throw err;
     console.log(`SERVER IS RUNNING ON ${process.env.PORT}`)
 })
