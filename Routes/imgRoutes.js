@@ -25,7 +25,7 @@ const upload = multer({
 
 
 router.route('/')
-.get(protect,getAllImages)  //here
+.get(getAllImages)  //here
 .post(upload.single('image'),protect,uploadHandler);
 
 
