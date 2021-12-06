@@ -1,6 +1,7 @@
 const express=require('express');
 const { route } = require('../app');
-const { Logout,resetPassword,forgotPassword, updateMe ,updatePassword, signup,login}=require('../Authentication/authController')
+const { Logout,resetPassword,forgotPassword, updateMe ,updatePassword, signup,login,protect}=require('../Authentication/authController');
+const {GetUserById,Follow, Unfollow, Like}=require('./../controllers/userController')
 
 const router=express.Router();
 
@@ -13,6 +14,19 @@ router.patch('/updatepassword',updatePassword);
 router.post('/logout',Logout)
 // router.patch('/updation',updateMe);
 
+router
+.route('/userprofile/:id')
+.get(GetUserById)
+
+router
+.route('/follow/:id')
+.put(protect,Follow)
+
+router.route('/unfollow/:id')
+.put(protect,Unfollow)
+
+router.route('/likedimages/:id')
+.get(protect,Like)
 
 
 

@@ -35,6 +35,10 @@ const userSchema=new mongoose.Schema({
     passwordChangedAt:Date,
     passwordResetToken:String,
     passwordResetExpires:Date,
+    uploads:[{type:mongoose.Schema.Types.ObjectId,ref:'Snaps'}],
+    followers:[{type:mongoose.Schema.Types.ObjectId,ref:"users",unique:true}],
+    following:[{type:mongoose.Schema.Types.ObjectId,ref:"users",unique:true}],
+    likedImages:[{type:mongoose.Schema.Types.ObjectId,ref:'Snaps'}],
 
 });
 
@@ -81,5 +85,5 @@ userSchema.methods.createPasswordResetToken=function(){
 };
 
 
-const User= mongoose.model('users',userSchema);
+const User= mongoose.model("users",userSchema);
 module.exports=User;

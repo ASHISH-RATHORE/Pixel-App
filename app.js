@@ -13,9 +13,10 @@ const compression=require('compression');
 const app=express();
 
 app.use(cors());
-
+app.use(express.static('public'));
 app.use(cookie());
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 
 app.use(compression())
