@@ -32,5 +32,7 @@ app.all('*',(req,res,next)=>{
 
 app.use(globalErrorHandler);
 
+//socket 
+
 
 module.exports=app;

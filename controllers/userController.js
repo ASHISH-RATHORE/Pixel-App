@@ -1,5 +1,6 @@
 const User=require('./../models/userModel');
 const Images = require('./../models/imgModel');
+const APIFeatures = require('../utils/apiFeatures');
 
 
 exports.GetUserById=async(req,res)=>{
@@ -9,17 +10,12 @@ exports.GetUserById=async(req,res)=>{
         //   const upload=await Images.find({userId:ID})
               const user=await User.findOne({_id:ID}).populate('uploads').exec();
             res.status(200).json({
-                status:'Success',
-                // data:{name:user.name,
-                //        email:user.email,
-                //       id:user._id}
+                status:'success',
                 data:user
             })
           }catch(err){
-            console.log(err)
               res.status(400).json({
-                  
-                  status:'Fail',
+                  status:'fail',
                   message:err.message
               })
           }
@@ -94,4 +90,43 @@ try{
         data:err
     })
 }
+}
+
+
+
+exports.followersList=async(req,res,next)=>{
+try{
+    const ids=req.body.followersList
+    
+      
+    const features=new APIFeatures(Images.find({ 'userId': { $in: ids } }),req.query).paginate();
+ await features.query.exec((err,doc)=>{
+    if (err) {
+        return res.json(err);
+      }
+
+  Images.find({ 'userId': { $in: ids } }).countDocuments().exec((error,count)=>{
+    if (error) {
+        return res.json(error);
+      }
+    res.status(200).json({
+        status:'success',
+        data:{
+            totalCount:count,
+            data:doc
+        }
+    })
+
+  });
+    
+
+    });
+     }catch(err){
+    console.log(err);
+    res.status(400).json({
+        status:'fail',
+        data:err
+    })
+}
+
 }

@@ -1,8 +1,8 @@
 const express=require('express');
 const { route } = require('../app');
 const { Logout,resetPassword,forgotPassword, updateMe ,updatePassword, signup,login,protect}=require('../Authentication/authController');
-const {GetUserById,Follow, Unfollow, Like}=require('./../controllers/userController')
-
+const {GetUserById,Follow, Unfollow, Like,followersList}=require('./../controllers/userController')
+const {ImagesByFollowers}=require('./../controllers/imageController')
 const router=express.Router();
 
 
@@ -28,7 +28,7 @@ router.route('/unfollow/:id')
 router.route('/likedimages/:id')
 .get(protect,Like)
 
-
+router.route('/following').post(followersList)
 
 
 module.exports=router;

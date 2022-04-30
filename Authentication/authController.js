@@ -38,21 +38,28 @@ exports.signup= async (req,res,next)=>{
 
 
         const token=signToken(newUser._id,newUser.name);
-        console.log(token);
 
-        res.cookie('jwt',token,{
-            expires:new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES*24*60*60*1000),
-            // secure:true,
-            httpOnly:true,
-        })
-
+        // res.cookie('jwt',token,{
+        //     expires:new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES*24*60*60*1000),
+        //     expires:new Date(Date.now()+1*60*1000),
+        //     // secure:true,
+        //     httpOnly:true,
+        // })
+        const subject=`Welcome ${newUser.name}`;
+        const message=`Hi ${newUser.name},Welcome to pixel. We're thrilled to see you here !`;
+    
+         sendEmail({
+            email:newUser.email,
+            subject,
+            message,
+        });
  res.status(201).json({
 
-    status:'Success',
-    // token,
-    // data:{
-    //     user:newUser,
-    // }
+    status:'success',
+    data:{
+        user:newUser,
+    },
+    messsage:"Successfully"
  })
     }catch(err){
         res.status(400).json({
@@ -121,12 +128,11 @@ exports.protect= async(req,res,next)=>{
 
     //2 validate token?
     const decoded=await promisify(jwt.verify)(token,process.env.SECRET_KEY);
-    console.log(decoded);
 
     //3 check user is still exist 
       const currentUser=await User.findById(decoded.id)
      if(!currentUser){
-         return next(new AppError('The user does not exist',401));
+         return next(new AppError('The user does not exist',400));
      }
 
     //4 check if user change password after the token issued 
@@ -137,9 +143,9 @@ exports.protect= async(req,res,next)=>{
       req.user=currentUser;
        next();    
 }catch(err){
-        res.status(400).json({
+        res.status(403).json({
             status:'fail',
-            message:err
+            message:err.message
         })
     }
     
@@ -222,7 +228,7 @@ try{
     
     // 3 send it to user's email
     const resetURL=`${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
-    const subject='Password reset token (valid for 10 minutes)';
+    const subject='Forget Password';
     const message=`Forgot your password? Submit a patch request with your new password
     and passwordConfirm to ${resetURL}\nif you didn't forget your password,plaease ignore this email!`;
 try{
@@ -231,8 +237,7 @@ try{
         email:user.email,
         subject,
         message,
-    });
-
+    })
     res.status(200).json({
         status:'success',
         message:'Token sent to email'
