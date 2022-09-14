@@ -25,7 +25,7 @@ app.use(compression())
 // Routes for pixel
 app.use('/api/v1/img',imgRouter);
 app.use('/api/v1/users',userRouter);
-app.use('/api/v1/signin',assRouter)
+app.use('/api/v1',assRouter)
 
 
 app.all('*',(req,res,next)=>{
