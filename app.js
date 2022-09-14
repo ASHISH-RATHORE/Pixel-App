@@ -1,6 +1,7 @@
 const express=require('express');
 const AppError=require('./utils/appError');
 const imgRouter=require('./Routes/imgRoutes');
+const assRouter=require('./Routes/assetRoutes');
 const globalErrorHandler = require('./Authentication/errorController');
 const userRouter=require('./Routes/userRoutes');
 const imgController = require('./controllers/imageController');
@@ -24,6 +25,7 @@ app.use(compression())
 // Routes for pixel
 app.use('/api/v1/img',imgRouter);
 app.use('/api/v1/users',userRouter);
+app.use('/api/v1/signin',assRouter)
 
 
 app.all('*',(req,res,next)=>{
