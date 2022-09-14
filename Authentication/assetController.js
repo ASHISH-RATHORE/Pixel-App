@@ -2,7 +2,25 @@ const jwt=require('jsonwebtoken');
 const crypto=require('crypto');
 const { resetPassword } = require('./authController');
 
-let mergingUnitData=[];
+let mergingUnitData=[{
+    streamId: 4,
+    label: 'rathore',
+    frequencyPerSecRMS: 2,
+    frequencyPerSecPower: 2,
+    samplesPerPeriod: 80,
+    powerAlarms: { minPower: 50, maxPower: 256, sendAlarms: true },
+    rmsAlarms: { minRms: -5, maxRms: 100, sendAlarms: true },
+    id: 4
+  },{
+    streamId: 5,
+    label: 'rathore',
+    frequencyPerSecRMS: 2,
+    frequencyPerSecPower: 2,
+    samplesPerPeriod: 80,
+    powerAlarms: { minPower: 50, maxPower: 256, sendAlarms: true },
+    rmsAlarms: { minRms: -5, maxRms: 100, sendAlarms: true },
+    id: 4
+  }];
 const tempObject={
     streamId:"",
     label:"",
@@ -31,7 +49,7 @@ exports.login= async(req,res,next)=>{
     }else{
         res.status(401).json({
             errorCode:"401",
-            message:"Invalid username or password"
+            message:"Invalid username or password ----ashish env"
         })
     }
   }catch(err){
@@ -47,27 +65,27 @@ exports.login= async(req,res,next)=>{
  
     if(req.body.streamId&&
     req.body.label){
-mergingUnitData.push({...tempObject,...req.body,id:mergingUnitData.length+1});
-res.status(201).json({...tempObject,...req.body,id:mergingUnitData.length+1})
+mergingUnitData.push({...tempObject,...req.body,id:req.body.streamId});
+res.status(201).json({...tempObject,...req.body,id:req.body.streamId})
     }else{
         res.status(401).json("failed to add")
     }
 
-    console.log(mergingUnitData);
    
   }
  
   exports.deleteUnit= async(req,res,next)=>{
+    
     if(req.params.id){
        const formattedData= mergingUnitData.filter((i)=>i.streamId!==req.params.id*1);
        mergingUnitData=[];
        mergingUnitData=formattedData
-       console.log(mergingUnitData); res.status(200).json("successfully deleted merging unit")
+        res.status(200).json("successfully deleted merging unit")
     }else{
         console.log("failed to delete unit ")
+        res.status(401).json("failed to deleted merging unit")
     }
 
-    console.log(mergingUnitData);
     
    
   }
@@ -77,3 +95,24 @@ res.status(201).json({...tempObject,...req.body,id:mergingUnitData.length+1})
     
    
   }
+
+  exports.getUnitById= async(req,res,next)=>{
+    
+    const data=mergingUnitData.filter((item)=>{
+        return item.id===req.params.id*1
+    })
+    res.status(200).json(...data)
+ }
+
+ exports.editUnitById= async(req,res,next)=>{
+    
+    const data=mergingUnitData.filter((item)=>{
+        return item.id===req.params.id*1
+    })
+    if(data.length>0){
+
+        let newData={...data[0],...req.body}
+        res.status(200).json(newData)
+    }
+
+ }
