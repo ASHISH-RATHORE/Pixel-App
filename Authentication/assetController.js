@@ -3,8 +3,9 @@ const crypto=require('crypto');
 const { resetPassword } = require('./authController');
 
 let mergingUnitData=[];
-const tempObject={streamId:"",
-lable:"",
+const tempObject={
+    streamId:"",
+    label:"",
     frequencyPerSecRMS:2,
     frequencyPerSecPower:2,
     samplesPerPeriod:80,
@@ -31,7 +32,10 @@ exports.login= async(req,res,next)=>{
         res.status(401).json("Invalid username and password")
     }
   }catch(err){
-    res.status(401).json("Invalid username and password")
+    res.status(401).json({
+        errorCode:"401",
+        message:"Invalid username or password"
+    })
   }
  }
  
@@ -40,8 +44,8 @@ exports.login= async(req,res,next)=>{
  
     if(req.body.streamId&&
     req.body.label){
-mergingUnitData.push({...tempObject,...req.body});
-res.status(201).json("Merging unit created")
+mergingUnitData.push({...tempObject,...req.body,id:mergingUnitData.length+1});
+res.status(201).json({...tempObject,...req.body,id:mergingUnitData.length+1})
     }else{
         res.status(401).json("failed to add")
     }
@@ -66,7 +70,7 @@ res.status(201).json("Merging unit created")
   }
 
   exports.getAllUnit= async(req,res,next)=>{
-     res.status(200).json([...mergingUnitData])
+     res.status(200).json(mergingUnitData.map((item)=>({id:item.id,streamId:item.streamId,label:item.label})))
     
    
   }
