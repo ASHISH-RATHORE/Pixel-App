@@ -29,12 +29,15 @@ exports.login= async(req,res,next)=>{
             sessionTimeout:"24h"
         })
     }else{
-        res.status(401).json("Invalid username and password")
+        res.status(401).json({
+            errorCode:"401",
+            message:"Invalid username or password"
+        })
     }
   }catch(err){
     res.status(401).json({
         errorCode:"401",
-        message:"Invalid username or password"
+        message:"Invalid username or password ----ashish env"
     })
   }
  }
