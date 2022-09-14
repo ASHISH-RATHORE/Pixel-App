@@ -112,6 +112,10 @@ res.status(201).json({...tempObject,...req.body,id:req.body.streamId})
     if(data.length>0){
 
         let newData={...data[0],...req.body}
+        var foundIndex=mergingUnitData.findIndex((x)=>x.id===req.params.id*1);
+        mergingUnitData[foundIndex]=newData
+
+        console.log(mergingUnitData);
         res.status(200).json(newData)
     }
 
