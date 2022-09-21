@@ -46,6 +46,12 @@ exports.login= async(req,res,next)=>{
             role:"Admin",
             sessionTimeout:"24h"
         })
+    }else if(req.body.username==="sourav"&&req.body.password==="sinha"){
+        res.status(200).json({
+            username:"Sourav Sinha",
+            role:"Local Operator",
+            sessionTimeout:"24h"
+        })
     }else{
         res.status(401).json({
             errorCode:"401",
@@ -55,7 +61,7 @@ exports.login= async(req,res,next)=>{
   }catch(err){
     res.status(401).json({
         errorCode:"401",
-        message:"Invalid username or password ----ashish env"
+        message:"Invalid username or password "
     })
   }
  }
