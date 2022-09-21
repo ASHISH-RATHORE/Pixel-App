@@ -126,3 +126,94 @@ res.status(201).json({...tempObject,...req.body,id:req.body.streamId})
     }
 
  }
+
+ exports.getHdmi= async(req,res,next)=>{
+      
+    const data=[
+        {
+        "deviceId": "125",
+        "creationTimestamp": "2022-07-29T06:58:47.238281",
+        "appId": null,
+        "active": true,
+        "id": "125",
+        "new": false
+        },
+        {
+        "deviceId": "124",
+        "creationTimestamp": "2022-07-29T06:58:48.319166",
+        "appId": null,
+        "active": true,
+        "id": "124",
+        "new": false
+        },
+        {
+        "deviceId": "129",
+        "creationTimestamp": "2022-07-29T06:10:08.714767",
+        "appId": null,
+        "active": true,
+        "id": "129",
+        "new": false
+        },
+        {
+        "deviceId": "122",
+        "creationTimestamp": "2022-07-29T06:58:40.904922",
+        "appId": null,
+        "active": true,
+        "id": "122",
+        "new": false
+        },
+        {
+        "deviceId": "127",
+        "creationTimestamp": "2022-07-29T06:58:41.427189",
+        "appId": null,
+        "active": true,
+        "id": "127",
+        "new": false
+        },
+        {
+        "deviceId": "121",
+        "creationTimestamp": "2022-07-29T06:58:41.935656",
+        "appId": null,
+        "active": true,
+        "id": "121",
+        "new": false
+        },
+        {
+        "deviceId": "128",
+        "creationTimestamp": "2022-07-29T06:58:43.851582",
+        "appId": null,
+        "active": true,
+        "id": "128",
+        "new": false
+        },
+        {
+        "deviceId": "120",
+        "creationTimestamp": "2022-07-29T06:58:44.421433",
+        "appId": null,
+        "active": true,
+        "id": "120",
+        "new": false
+        },
+        {
+        "deviceId": "126",
+        "creationTimestamp": "2022-07-29T06:58:46.693521",
+        "appId": null,
+        "active": true,
+        "id": "126",
+        "new": false
+        },
+        {
+        "deviceId": "123",
+        "creationTimestamp": null,
+        "appId": "1",
+        "active": true,
+        "id": "123",
+        "new": true
+        }
+        ]
+
+        console.log(data)
+    res.status(200).json(data.map((item)=>({streamId:item.id,label:`Merging Unit ${item.id}`,muStatus:true})))
+   
+  
+ }
