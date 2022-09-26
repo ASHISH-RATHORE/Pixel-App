@@ -217,3 +217,22 @@ res.status(201).json({...tempObject,...req.body,id:req.body.streamId})
    
   
  }
+
+ 
+ exports.getMUList= async(req,res,next)=>{
+        const data=[]
+
+        for (let index = 0; index < 10; index++) {
+            
+            data.push({   
+                deviceId: `12${index}`,
+                label:`Merging Unit ${index}`,
+                muActiveStatus:index%2===0?true:false,
+                startMU:index%2===0?true:false
+                })
+            
+        }
+    res.status(200).json(data)
+   
+  
+ }
