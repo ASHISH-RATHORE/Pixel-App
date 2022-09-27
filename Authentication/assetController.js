@@ -2,7 +2,7 @@ const jwt=require('jsonwebtoken');
 const crypto=require('crypto');
 const { resetPassword } = require('./authController');
 
-let mergingUnitData={};
+let mergingUnitData=[];
 const tempObject={
     streamId:"",
     label:"",
