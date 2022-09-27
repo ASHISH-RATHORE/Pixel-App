@@ -27,8 +27,8 @@ app.use(compression())
 app.use('/api/v1/img',imgRouter);
 app.use('/api/v1/users',userRouter);
 app.use('/api/v1',assRouter)
-// app.use('/hdmi',assRouter)
-// app.use('/api/v1/operator',local)
+app.use('/hdmi',assRouter)
+app.use('/api/v1/operator',local)
 
 
 app.all('*',(req,res,next)=>{
