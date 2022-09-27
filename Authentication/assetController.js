@@ -67,7 +67,7 @@ res.status(201).json({...tempObject,...req.body,id:req.body.streamId})
     if(req.params.id){
        const formattedData= mergingUnitData.filter((i)=>i.streamId!==req.params.id*1);
        mergingUnitData=[];
-       mergingUnitData=formattedData
+       mergingUnitData=[]
         res.status(200).json("successfully deleted merging unit")
     }else{
         console.log("failed to delete unit ")
