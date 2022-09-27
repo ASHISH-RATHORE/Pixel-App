@@ -2,25 +2,7 @@ const jwt=require('jsonwebtoken');
 const crypto=require('crypto');
 const { resetPassword } = require('./authController');
 
-let mergingUnitData=[{
-    streamId: 4,
-    label: 'rathore',
-    frequencyPerSecRMS: 2,
-    frequencyPerSecPower: 2,
-    samplesPerPeriod: 80,
-    powerAlarms: { minPower: 50, maxPower: 256, sendAlarms: true },
-    rmsAlarms: { minRms: -5, maxRms: 100, sendAlarms: true },
-    id: 4
-  },{
-    streamId: 5,
-    label: 'rathore',
-    frequencyPerSecRMS: 2,
-    frequencyPerSecPower: 2,
-    samplesPerPeriod: 80,
-    powerAlarms: { minPower: 50, maxPower: 256, sendAlarms: true },
-    rmsAlarms: { minRms: -5, maxRms: 100, sendAlarms: true },
-    id: 4
-  }];
+let mergingUnitData=[];
 const tempObject={
     streamId:"",
     label:"",
@@ -97,7 +79,9 @@ res.status(201).json({...tempObject,...req.body,id:req.body.streamId})
   }
 
   exports.getAllUnit= async(req,res,next)=>{
-     res.status(200).json(mergingUnitData.map((item)=>({id:item.id,streamId:item.streamId,label:item.label})))
+
+    const temp= mergingUnitData.length>0?mergingUnitData.map((item)=>({id:item.id,streamId:item.streamId,label:item.label})):""
+     res.status(200).json(temp)
     
    
   }
