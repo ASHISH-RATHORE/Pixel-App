@@ -28,7 +28,7 @@ app.use('/api/v1/img',imgRouter);
 app.use('/api/v1/users',userRouter);
 app.use('/api/v1',assRouter)
 app.use('/hdmi',assRouter)
-app.use('/api/v1/scada',local)
+app.use('/api/v1/assetmgr',local)
 
 
 app.all('*',(req,res,next)=>{
