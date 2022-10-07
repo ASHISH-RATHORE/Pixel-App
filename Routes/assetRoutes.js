@@ -9,8 +9,8 @@ router.route('/signin')
 .post(login);
 router.route('/merging-unit').post(addUnit);
 router.route('/merging-unit/:id').delete(deleteUnit);
+router.route("/merging-unit/list").get(getHdmi)
 router.route('/merging-unit/list').get(getAllUnit)
-// router.route("/merging-unit/list").get(getHdmi)
 
 router.route('/merging-unit/:id/config').get(getUnitById).put(editUnitById)
 

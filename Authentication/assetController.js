@@ -111,7 +111,7 @@ res.status(201).json({...tempObject,...req.body,id:req.body.streamId})
 
  }
 
- exports.getHdmi= async(req,res,next)=>{
+ exports.  getHdmi= async(req,res,next)=>{
       
     const data=[
         {
