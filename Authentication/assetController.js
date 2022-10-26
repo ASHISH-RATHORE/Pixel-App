@@ -212,7 +212,8 @@ res.status(201).json({...tempObject,...req.body,id:req.body.streamId})
                 streamId: `12${index}`,
                 label:`Merging Unit ${index}`,
                 muActiveStatus:index%2===0?true:false,
-                startMU:index%2===0?true:false
+                startMU:index%2===0?true:false,
+                displaySequence:index
                 })
             
         }
