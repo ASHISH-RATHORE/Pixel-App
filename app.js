@@ -29,6 +29,8 @@ app.use('/api/v1/users',userRouter);
 app.use('/api/v1',assRouter)
 app.use('/hdmi',assRouter)
 app.use('/api/v1/assetmgr',local)
+app.use('/api/v1/operator',local)
+
 
 console.log("test")
 app.all('*',(req,res,next)=>{
