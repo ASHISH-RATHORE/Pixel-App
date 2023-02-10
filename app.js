@@ -30,7 +30,7 @@ app.use('/api/v1',assRouter)
 app.use('/hdmi',assRouter)
 app.use('/api/v1/assetmgr',local)
 
-
+console.log("test")
 app.all('*',(req,res,next)=>{
     return next(new AppError(`can't find ${req.originalUrl} on this Server`,404));
 });
