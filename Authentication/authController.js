@@ -36,14 +36,14 @@ exports.signup = async (req, res, next) => {
     //     // secure:true,
     //     httpOnly:true,
     // })
-    const subject = `Welcome ${newUser.name}`;
-    const message = `Hi ${newUser.name},Welcome to pixel. We're thrilled to see you here !`;
+    // const subject = `Welcome ${newUser.name}`;
+    // const message = `Hi ${newUser.name},Welcome to pixel. We're thrilled to see you here !`;
 
-    sendEmail({
-      email: newUser.email,
-      subject,
-      message,
-    });
+    // sendEmail({
+    //   email: newUser.email,
+    //   subject,
+    //   message,
+    // });
     res.status(201).json({
       status: "success",
       data: {

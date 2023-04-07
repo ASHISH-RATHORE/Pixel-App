@@ -31,7 +31,6 @@
     "nodemailer": "^6.4.18",
     "nodemon": "^2.0.6",
     "popper.js": "^1.16.1",
-    "socket.io": "^4.4.0",
     "uuid": "^8.3.2",
     "validator": "^13.5.2",
     "ws": "^8.10.0"
