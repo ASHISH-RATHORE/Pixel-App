@@ -25,16 +25,17 @@ app.use(compression());
 // Routes for pixel
 app.use("/api/v1/img", imgRouter);
 app.use("/api/v1/users", userRouter);
-app.use("/api/mail", async () => {
+app.use("/api/mail", async (req, res) => {
   try {
     const data = await Resend.emails.send({
       from: "onboarding@resend.dev",
-      to: "souravsinha1604@gmail.com",
+      to: ["ashishr97@gmail.com", "souravsinha1604@gmail.com"],
       subject: "Hello World",
       html: "<strong>It works!</strong>",
     });
 
     console.log(data);
+    res.send("success");
   } catch (error) {
     console.error(error);
   }
