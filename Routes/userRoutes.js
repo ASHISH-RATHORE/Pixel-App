@@ -19,6 +19,9 @@ const {
   getAllUsers,
 } = require("./../controllers/userController");
 const { ImagesByFollowers } = require("./../controllers/imageController");
+const { Resend } = require("resend");
+
+const resend = new Resend("re_jcmeZppN_GkxCy3b2aaw4wgwuVbpYBFoU");
 const router = express.Router();
 
 router.post("/signup", signup);
@@ -28,7 +31,21 @@ router.patch("/resetPassword/:token", resetPassword);
 router.patch("/updatepassword", updatePassword);
 router.post("/logout", Logout);
 // router.patch('/updation',updateMe);
+router.get("/mail", async () => {
+  try {
+    const data = await Resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: ["ashishr97@gmail.com", "souravsinha1604@gmail.com"],
+      subject: "Hello World",
+      html: "<strong>It works!</strong>",
+    });
 
+    console.log(data);
+    res.send("success");
+  } catch (error) {
+    console.error(error);
+  }
+});
 router.route("/userprofile/:id").get(GetUserById);
 
 router.route("/follow/:id").put(protect, Follow);
