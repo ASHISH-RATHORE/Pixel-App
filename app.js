@@ -9,7 +9,9 @@ const imgController = require("./controllers/imageController");
 const cookie = require("cookie-parser");
 const cors = require("cors");
 const compression = require("compression");
+const { Resend } = require("resend");
 
+const resend = new Resend("re_jcmeZppN_GkxCy3b2aaw4wgwuVbpYBFoU");
 const app = express();
 
 app.use(cors());
@@ -23,6 +25,20 @@ app.use(compression());
 // Routes for pixel
 app.use("/api/v1/img", imgRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/mail", async () => {
+  try {
+    const data = await Resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: "souravsinha1604@gmail.com",
+      subject: "Hello World",
+      html: "<strong>It works!</strong>",
+    });
+
+    console.log(data);
+  } catch (error) {
+    console.error(error);
+  }
+});
 // app.use('/api/v1',assRouter)
 // app.use('/hdmi',assRouter)
 // app.use('/api/v1/assetmgr',local)
