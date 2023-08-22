@@ -2,7 +2,7 @@ const User = require("./../models/userModel");
 const jwt = require("jsonwebtoken");
 const AppError = require("../utils/appError");
 const { promisify } = require("util");
-const sendEmail = require("../utils/email");
+const { sendWelcomeEmail } = require("../utils/email");
 const crypto = require("crypto");
 
 const filterObj = (obj, ...alowedFields) => {
@@ -25,36 +25,29 @@ exports.signup = async (req, res, next) => {
       email: req.body.email,
       password: req.body.password,
       passwordConfirm: req.body.passwordConfirm,
+
       passwordChangedAt: req.body.passwordChangedAt,
     });
 
     const token = signToken(newUser._id, newUser.name);
+    if (newUser._id) {
+      await sendWelcomeEmail({
+        email: newUser.email,
+        name: newUser.name,
+      }).then((res) => {
+        console.log("mail sent");
+      });
+    }
 
-    // res.cookie('jwt',token,{
-    //     expires:new Date(Date.now()+process.env.JWT_COOKIE_EXPIRES*24*60*60*1000),
-    //     expires:new Date(Date.now()+1*60*1000),
-    //     // secure:true,
-    //     httpOnly:true,
-    // })
-    // const subject = `Welcome ${newUser.name}`;
-    // const message = `Hi ${newUser.name},Welcome to pixel. We're thrilled to see you here !`;
-
-    // sendEmail({
-    //   email: newUser.email,
-    //   subject,
-    //   message,
-    // });
     res.status(201).json({
-      status: "success",
-      data: {
-        user: newUser,
-      },
-      messsage: "Successfully",
+      status: true,
+      messsage: "User created Successfully",
     });
   } catch (err) {
+    console.log(err, "--newUser");
     res.status(400).json({
-      status: "fail",
-      message: err,
+      status: false,
+      message: "Failed to create new user",
     });
   }
 };
@@ -86,7 +79,7 @@ exports.login = async (req, res, next) => {
       httpOnly: true,
     });
     res.status(200).json({
-      status: "success",
+      status: true,
       token,
       name: user?.name,
       id: user?._id,
@@ -94,7 +87,7 @@ exports.login = async (req, res, next) => {
     });
   } catch (err) {
     res.status(400).json({
-      status: "fail",
+      status: false,
       message: err,
     });
   }
@@ -211,7 +204,7 @@ exports.forgotPassword = async (req, res, next) => {
     const message = `Forgot your password? Submit a patch request with your new password
     and passwordConfirm to ${resetURL}\nif you didn't forget your password,plaease ignore this email!`;
     try {
-      await sendEmail({
+      await sendWelcomeEmail({
         email: user.email,
         subject,
         message,

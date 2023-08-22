@@ -9,11 +9,7 @@ const imgController = require("./controllers/imageController");
 const cookie = require("cookie-parser");
 const cors = require("cors");
 const compression = require("compression");
-const { Resend } = require("resend");
-
-const resend = new Resend("re_jcmeZppN_GkxCy3b2aaw4wgwuVbpYBFoU");
 const app = express();
-
 app.use(cors());
 app.use(express.static("public"));
 app.use(cookie());
@@ -30,12 +26,8 @@ app.use("/api/v1/users", userRouter);
 // app.use('/hdmi',assRouter)
 // app.use('/api/v1/assetmgr',local)
 // app.use('/api/v1/operator',local)
-
-console.log("test");
 app.all("*", (req, res, next) => {
-  return next(
-    new AppError(`can't find ${req.originalUrl} on this Server`, 404)
-  );
+  return next(new AppError(`can't find on this Server`, 404));
 });
 
 app.use(globalErrorHandler);
